@@ -1,0 +1,55 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-panel,
+.right-panel {
+  width: 50%;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* Grid para las cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.card {
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.card img {
+  width: 80px;
+  height: 80px;
+}
+
+.card p {
+  margin: 6px 0 0;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+/* estado gris */
+.eliminated {
+  filter: grayscale(100%);
+  opacity: 0.4;
+}
+
+/* buscador un poco más grande */
+input {
+  padding: 8px;
+  font-size: 14px;
+  width: 250px;
+}
