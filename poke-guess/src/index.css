@@ -17,7 +17,7 @@ body {
   height: 100vh;
 }
 
-.left-panel,
+
 .right-panel {
   width: 40%;
   height: 80vh;
@@ -29,6 +29,23 @@ body {
   border-radius: 15px;
 
   background: rgba(255, 255, 255, 0.75);
+
+  backdrop-filter: blur(6px);
+
+  border: 2px solid rgba(0,0,0,0.2);
+}
+
+.left-panel{
+  flex:1;
+  height: 80vh;
+
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+
+  border-radius: 15px;
+
+  background: rgba(255,255,255,0.75);
 
   backdrop-filter: blur(6px);
 
@@ -86,4 +103,129 @@ input {
 
 .card:hover {
   transform: scale(1.1);
+}
+
+.selected-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.control-btn {
+  background: rgba(255,255,255,0.6);
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.control-btn:hover {
+  transform: scale(1.1);
+}
+
+.left-section{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  width:40%;
+}
+.control-panel{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.left-panel{
+  flex:1;
+}
+
+.popover{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+
+  width:320px;
+
+  background:linear-gradient(180deg,#ffffff,#f3f6ff);
+
+  padding:20px;
+
+  border-radius:16px;
+
+  box-shadow:0 10px 30px rgba(0,0,0,0.25);
+
+  border:2px solid rgba(0,0,0,0.15);
+
+  z-index:1000;
+
+  text-align:center;
+
+  animation: popIn 0.2s ease;
+}
+
+.popover-buttons{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-top:10px;
+}
+
+.popover button{
+
+  padding:8px 12px;
+
+  border:none;
+
+  border-radius:8px;
+
+  cursor:pointer;
+
+  background:#3b82f6;
+
+  color:white;
+
+  font-weight:bold;
+
+  transition:transform 0.15s ease, background 0.2s ease;
+}
+
+.popover button:hover{
+  transform:scale(1.05);
+  background:#2563eb;
+}
+
+@keyframes popIn{
+  from{
+    transform:translate(-50%,-60%) scale(0.95);
+    opacity:0;
+  }
+  to{
+    transform:translate(-50%,-50%) scale(1);
+    opacity:1;
+  }
+}
+
+.popover input,
+.popover textarea{
+
+  width:100%;
+  padding:8px;
+
+  border-radius:8px;
+
+  border:1px solid rgba(0,0,0,0.2);
+
+  margin-top:8px;
+
+  font-size:14px;
+
+  box-sizing:border-box;
+}
+
+.popover hr{
+  margin:15px 0;
+  border:none;
+  border-top:1px solid rgba(0,0,0,0.15);
 }

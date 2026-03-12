@@ -1,12 +1,57 @@
 import { useEffect, useState } from "react"
 import PokemonGrid from "../components/PokemonGrid"
 import SearchBar from "../components/SearchBar"
+import ControlPanel from "../components/ControlPanel"
+import RandomPopover from "../components/RandomPopover"
+import ImportExportPopover from "../components/ImportExportPopover"
 
 function Game() {
 
   const [pokemonList, setPokemonList] = useState([])
   const [search, setSearch] = useState("")
   const [selectedPokemon, setSelectedPokemon] = useState([])
+  const [showRandom, setShowRandom] = useState(false)
+  const [showImportExport, setShowImportExport] = useState(false)
+
+  const handleRandomClick = () => {
+    setShowRandom(true)
+  }
+
+  const handleImportExportClick = () => {
+    setShowImportExport(true)
+  }
+
+  const addRandomPokemon = (amount) => {
+
+    const available = pokemonList.filter(
+      p => !selectedPokemon.some(sp => sp.id === p.id)
+    )
+
+    const shuffled = [...available].sort(() => 0.5 - Math.random())
+
+    const randomSelected = shuffled.slice(0, amount).map(p => ({
+      ...p,
+      eliminated: false
+    }))
+
+    setSelectedPokemon(prev => [...prev, ...randomSelected])
+
+    setShowRandom(false)
+  }
+
+  const importPokemon = (ids) => {
+
+    const imported = ids
+      .map(id => pokemonList.find(p => p.id === id))
+      .filter(Boolean)
+      .map(p => ({
+        ...p,
+        eliminated: false
+      }))
+
+    setSelectedPokemon(imported)
+    setShowImportExport(false)
+  }
 
   useEffect(() => {
     fetch("https://pokeapi.co/api/v2/pokemon?limit=1025")
@@ -54,14 +99,24 @@ function Game() {
   return (
     <div className="container">
 
-      <div className="left-panel">
-        <h2>Selected Pokemon</h2>
+      <div className="left-section">
 
-        <PokemonGrid
-          pokemon={selectedPokemon}
-          onClick={toggleEliminated}
-          selectable={false}
+        <ControlPanel
+          onRandomClick={handleRandomClick}
+          onImportExportClick={handleImportExportClick}
         />
+
+        <div className="left-panel">
+
+          <h2>Selected Pokemon</h2>
+
+          <PokemonGrid
+            pokemon={selectedPokemon}
+            onClick={toggleEliminated}
+            selectable={false}
+          />
+
+        </div>
 
       </div>
 
@@ -79,6 +134,20 @@ function Game() {
         />
 
       </div>
+      {showRandom && (
+        <RandomPopover
+          onSelect={addRandomPokemon}
+          onClose={() => setShowRandom(false)}
+        />
+      )}
+      
+      {showImportExport && (
+        <ImportExportPopover
+          selectedPokemon={selectedPokemon}
+          onImport={importPokemon}
+          onClose={() => setShowImportExport(false)}
+        />
+      )}
 
     </div>
   )
